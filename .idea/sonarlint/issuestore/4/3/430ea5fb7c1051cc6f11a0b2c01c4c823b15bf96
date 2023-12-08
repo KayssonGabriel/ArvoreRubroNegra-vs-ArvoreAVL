@@ -1,0 +1,9 @@
+
+>
+java:S1643""Use a StringBuilder instead.(ôºÊşÿÿÿÿ8çüŸÖÄ1
+Y
+java:S4973$"<Strings and Boxed types should be compared using "equals()".(òÒñÔ8çüŸÖÄ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÈŠ±8èüŸÖÄ1
+G	java:S106"+Replace this use of System.out by a logger.(ÂµÍÎ8êıŸÖÄ1
+G	java:S106I"+Replace this use of System.out by a logger.(Æı·®8îıŸÖÄ1
+G	java:S106T"+Replace this use of System.out by a logger.(ÅêÌƒ8ñıŸÖÄ1

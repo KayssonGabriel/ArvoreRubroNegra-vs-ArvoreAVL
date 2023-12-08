@@ -1,0 +1,17 @@
+
+r
+java:S1104"PMake raiz a static final constant or non-public and provide accessors if needed.(Ä”¯¹úÿÿÿÿ8ÂÖÂÍÄ1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ñç¢­üÿÿÿÿ8ÄÖÂÍÄ1
+t
+java:S3776["RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(ÆÄƒøÿÿÿÿ8ëÖÂÍÄ1
+Z
+java:S1854l"8Remove this useless assignment to local variable "temp".(Éêàüÿÿÿÿ8ëÖÂÍÄ1
+M	java:S106‘"+Replace this use of System.out by a logger.(ªÌğˆıÿÿÿÿ8íÖÂÍÄ1
+M	java:S106š"+Replace this use of System.out by a logger.(ªÌğˆıÿÿÿÿ8îÖÂÍÄ1
+M	java:S106£"+Replace this use of System.out by a logger.(ªÌğˆıÿÿÿÿ8îÖÂÍÄ1
+H	java:S106À"+Replace this use of System.out by a logger.(Éğ8ñÖÂÍÄ1
+M	java:S106Â"+Replace this use of System.out by a logger.(Œ“¡Æıÿÿÿÿ8ñÖÂÍÄ1
+M	java:S106Å"+Replace this use of System.out by a logger.(üøŒ„ûÿÿÿÿ8ñÖÂÍÄ1
+H	java:S106È"+Replace this use of System.out by a logger.(×ŞåÓ8ñÖÂÍÄ1
+H	java:S106Ñ"+Replace this use of System.out by a logger.(×õôş8òÖÂÍÄ1
+M	java:S106Ø"+Replace this use of System.out by a logger.(ú»‡Éıÿÿÿÿ8òÖÂÍÄ1
