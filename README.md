@@ -1,4 +1,4 @@
-#Implemente a árvore Rubro Negra e uma árvore AVL.
+# Implemente a árvore Rubro Negra e uma árvore AVL.
 
 1) Para isso será utilizado o mesmo arquivo de dados da aula anterior (100 mil números), marque o tempo necessário para cada árvore ser completamente preenchida com os dados do arquivo.
 
