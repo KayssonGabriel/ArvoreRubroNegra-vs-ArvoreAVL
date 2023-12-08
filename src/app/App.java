@@ -20,103 +20,81 @@ import arquivoDados.Arquivo;
 import arvoreAVL.ArvoreAVL;
 import arvoreRubroNegra.ArvoreRubroNegra;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ArvoreAVL arvoreAvl = new ArvoreAVL();
-        ArvoreRubroNegra arvoreRubroNegra = new ArvoreRubroNegra();
-        Random random = new Random();
+        Path entrada = Path.of(args.length > 0 ? args[0] : "src/arquivoDados/dados100_mil.txt");
+        Path saida = Path.of(args.length > 1 ? args[1] : "resultados");
         Arquivo arquivo = new Arquivo();
+        int[] vetor = arquivo.lerArquivo(entrada.toString());
+        Files.createDirectories(saida);
 
-        int[] vetor = arquivo.lerArquivo("C:\\Users\\kayss\\Documents\\ED2\\ArvoreAVL\\src\\arquivoDados\\dados100_mil.txt");
+        Random random = new Random();
+        int[] vetorSorteio = random.ints(50_000, -9_999, 10_000).toArray();
+        ArvoreAVL arvoreAvl = new ArvoreAVL();
+        List<String> contagensAVL = new ArrayList<>();
 
-        //sorteio aleatório de outros 50.000 números entre -9999 e 9999
-        int numeroDeSorteios = 50000;
-
-        int[] vetorSorteio = new int[numeroDeSorteios];
-        for (int i = 0; i < numeroDeSorteios; i++) {
-            int numeroSorteado = random.nextInt((9999 - -9999) + 1) + -9999;
-            vetorSorteio[i] = numeroSorteado;
+        long inicioAVL = System.nanoTime();
+        for (int numero : vetor) {
+            arvoreAvl.raiz = arvoreAvl.insertNo(arvoreAvl.raiz, numero);
         }
+        long fimPreenchimentoAVL = System.nanoTime();
 
-        long inicioAVLTotal = System.currentTimeMillis();
-
-        // Arvore AVL
-        long inicioAVL = System.currentTimeMillis(); // tempo necessário para a árvore AVL ser completamente preenchida com os dados do arquivo
-        for (int i = 0; i < vetor.length; i++) {
-            arvoreAvl.raiz = arvoreAvl.insertNo(arvoreAvl.raiz, vetor[i]);
-        }
-        long fimAVL = System.currentTimeMillis();
-        long tempoAVL = fimAVL - inicioAVL;
-
-        String formatTempoAVL = converterTempo(tempoAVL);
-
-        System.out.println("Tempo necessário para a árvore AVL ser completamente preenchida com os dados do arquivo(100 mil): " + formatTempoAVL);
-
-
-        for (int i = 0; i < vetorSorteio.length; i++) {
-            int numeroSorteado = vetorSorteio[i];
-            if (numeroSorteado % 3 == 0) {
-                arvoreAvl.raiz = arvoreAvl.insertNo(arvoreAvl.raiz, numeroSorteado);
-            } else if (numeroSorteado % 5 == 0) {
-                arvoreAvl.raiz = arvoreAvl.deleteNo(arvoreAvl.raiz, numeroSorteado);
+        for (int numero : vetorSorteio) {
+            if (numero % 3 == 0) {
+                arvoreAvl.raiz = arvoreAvl.insertNo(arvoreAvl.raiz, numero);
+            } else if (numero % 5 == 0) {
+                arvoreAvl.raiz = arvoreAvl.deleteNo(arvoreAvl.raiz, numero);
             } else {
-                int countAVL = arvoreAvl.contarOcorrencias(arvoreAvl.raiz, numeroSorteado);
-                String impressao = "O número " + numeroSorteado + " aparece " + countAVL + " vezes na árvore AVL";
-                arquivo.salvarImpressao("C:\\Users\\kayss\\Documents\\ED2\\Árvore Rubro Negra vs Árvore AVL\\src\\arquivoDados\\Gravados\\Contador de vezes que o número aparece na AVL.txt", impressao);
+                int contagem = arvoreAvl.contarOcorrencias(arvoreAvl.raiz, numero);
+                contagensAVL.add("O número " + numero + " aparece " + contagem + " vezes na árvore AVL");
             }
         }
+        long fimAVL = System.nanoTime();
 
-        long fimAVLTotal = System.currentTimeMillis();
-        long tempoAVLTotal = fimAVLTotal - inicioAVLTotal;
+        ArvoreRubroNegra arvoreRubroNegra = new ArvoreRubroNegra();
+        List<String> contagensRB = new ArrayList<>();
 
-        String formatTempoAVLTotal = converterTempo(tempoAVLTotal);
-
-        System.out.println("Tempo total Árvore AVL: " + formatTempoAVLTotal);
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-        System.out.println("---------------------------------------------------------------------------------");
-        long inicioRBTotal = System.currentTimeMillis();
-
-        // Arvore Rubro Negra
-        long inicioRubroNegra = System.currentTimeMillis(); // tempo necessário para a árvore Rubro Negra ser completamente preenchida com os dados do arquivo
-        for (int i = 0; i < vetor.length; i++) {
-            arvoreRubroNegra.insert(vetor[i]);
+        long inicioRB = System.nanoTime();
+        for (int numero : vetor) {
+            arvoreRubroNegra.insert(numero);
         }
-        long fimRubroNegra = System.currentTimeMillis();
-        long tempoRubroNegra = fimRubroNegra - inicioRubroNegra;
+        long fimPreenchimentoRB = System.nanoTime();
 
-        String formatTempoRubroNegra = converterTempo(tempoRubroNegra);
-
-        System.out.println("Tempo necessário para a árvore Rubro Negra ser completamente preenchida com os dados do arquivo(100 mil): " + formatTempoRubroNegra);
-
-        for (int i = 0; i < vetorSorteio.length; i++) {
-            int numeroSorteado = vetorSorteio[i];
-            if (numeroSorteado % 3 == 0) {
-                arvoreRubroNegra.insert(numeroSorteado);
-            } else if (numeroSorteado % 5 == 0) {
-                arvoreRubroNegra.deleteNo(numeroSorteado);
+        for (int numero : vetorSorteio) {
+            if (numero % 3 == 0) {
+                arvoreRubroNegra.insert(numero);
+            } else if (numero % 5 == 0) {
+                arvoreRubroNegra.deleteNo(numero);
             } else {
-                int countRubroNegra = arvoreRubroNegra.contarOcorrencias(arvoreRubroNegra.getRoot(), numeroSorteado);
-                String impressao = "O número " + numeroSorteado + " aparece "  + countRubroNegra + " vezes na árvore Rubro Negra.";
-                arquivo.salvarImpressao("C:\\Users\\kayss\\Documents\\ED2\\Árvore Rubro Negra vs Árvore AVL\\src\\arquivoDados\\Gravados\\Contador de vezes que o número aparece na Rubro Negra.txt", impressao);
+                int contagem = arvoreRubroNegra.contarOcorrencias(arvoreRubroNegra.getRoot(), numero);
+                contagensRB.add("O número " + numero + " aparece " + contagem + " vezes na árvore Rubro Negra.");
             }
         }
+        long fimRB = System.nanoTime();
 
-        long fimRBTotal = System.currentTimeMillis();
-        long tempoRBTotal = fimRBTotal - inicioRBTotal;
+        imprimirTempo("AVL", fimPreenchimentoAVL - inicioAVL, fimAVL - inicioAVL);
+        imprimirTempo("Rubro Negra", fimPreenchimentoRB - inicioRB, fimRB - inicioRB);
+        arquivo.salvarImpressoes(saida.resolve("Contador de vezes que o número aparece na AVL.txt"), contagensAVL);
+        arquivo.salvarImpressoes(saida.resolve("Contador de vezes que o número aparece na Rubro Negra.txt"), contagensRB);
+    }
 
-        String formatTempoRBTotal = converterTempo(tempoRBTotal);
-
-        System.out.println("Tempo total Árvore Rubro Negra: " + formatTempoRBTotal);
-
+    private static void imprimirTempo(String arvore, long preenchimento, long total) {
+        System.out.println("Tempo de preenchimento da árvore " + arvore + ": "
+                + converterTempo(TimeUnit.NANOSECONDS.toMillis(preenchimento)));
+        System.out.println("Tempo total da árvore " + arvore + ": " + converterTempo(TimeUnit.NANOSECONDS.toMillis(total)));
     }
 
     private static String converterTempo(long tempo) {
         int miliSeg = (int) (tempo % 1000);
         int seg = (int) ((tempo / 1000) % 60);
-        int min = (int) ((tempo / 1000) / 60);
+        int min = (int) ((tempo / 60000) % 60);
         int hr = (int) (tempo / 3600000);
 
         return String.format("%02d:%02d:%02d:%03d", hr, min, seg, miliSeg);

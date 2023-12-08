@@ -1,44 +1,40 @@
 package arquivoDados;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Arquivo {
     public int[] lerArquivo(String url) {
         Path caminho = Paths.get(url); // Vai receber o caminho do arquivo
 
-        String leitura = "";
-
+        String leitura;
         try {
-            byte[] texto = Files.readAllBytes(caminho);
-
-            leitura = new String(texto);
-
-        } catch (Exception e) {
-            System.out.println("Não foi possível ler o arquivo!");
+            leitura = Files.readString(caminho).trim();
+        } catch (IOException e) {
+            throw new UncheckedIOException("Não foi possível ler " + caminho, e);
         }
 
         ArrayList<Integer> protoVetor = new ArrayList<>();
 
-        String num = "";
+        StringBuilder num = new StringBuilder();
 
         for (int i = 0; i < leitura.length(); i++) {
-            if (leitura.charAt(i) != '[' && leitura.charAt(i) != ']' && leitura.charAt(i) != ','
-                    && leitura.charAt(i) != ' ') {
-                num += leitura.charAt(i);
-            } else {
-                if (num != "") {
-                    int numero = Integer.parseInt(num);
-                    protoVetor.add(numero);
-                    num = "";
-                }
+            char caractere = leitura.charAt(i);
+            if (caractere != '[' && caractere != ']' && caractere != ',' && !Character.isWhitespace(caractere)) {
+                num.append(caractere);
+            } else if (num.length() > 0) {
+                protoVetor.add(Integer.parseInt(num.toString()));
+                num.setLength(0);
             }
+        }
+        if (num.length() > 0) {
+            protoVetor.add(Integer.parseInt(num.toString()));
         }
 
         int[] vetor = new int[protoVetor.size()];
@@ -74,20 +70,7 @@ public class Arquivo {
         }
     }
 
-    public void salvarImpressao(String url, String impressao) {
-        Path caminho = Paths.get(url);
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho.toFile(), true))) {
-            writer.write(impressao + System.lineSeparator());
-            writer.flush();
-        } catch (IOException e) {
-            System.out.println("Erro ao salvar a impressão no arquivo!");
-            e.printStackTrace();
-        }
+    public void salvarImpressoes(Path caminho, List<String> impressoes) throws IOException {
+        Files.write(caminho, impressoes);
     }
 }
-
-
-
-
-

@@ -59,7 +59,7 @@ public class ArvoreRubroNegra {
                     s = x.pai.left;
                 }
 
-                if (s.right.cor == NEGRO && s.right.cor == NEGRO) {
+                if (s.left.cor == NEGRO && s.right.cor == NEGRO) {
                     s.cor = RUBRO;
                     x = x.pai;
                 } else {
@@ -391,17 +391,14 @@ public class ArvoreRubroNegra {
         if (no == TNULL) {
             return 0;
         }
-
-        int count = 0;
-
-        if (key == no.item) {
-            count++;
+        if (key < no.item) {
+            return contarOcorrencias(no.left, key);
         }
-
-        count += contarOcorrencias(no.left, key);
-        count += contarOcorrencias(no.right, key);
-
-        return count;
+        if (key > no.item) {
+            return contarOcorrencias(no.right, key);
+        }
+        // Rotações podem deixar chaves iguais nos dois lados.
+        return 1 + contarOcorrencias(no.left, key) + contarOcorrencias(no.right, key);
     }
 
 }
