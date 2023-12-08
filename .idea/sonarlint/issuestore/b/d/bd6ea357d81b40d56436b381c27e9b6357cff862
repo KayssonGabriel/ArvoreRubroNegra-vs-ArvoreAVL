@@ -7,7 +7,7 @@ m
 java:S1764>"KCorrect one of the identical sub-expressions on both sides of operator "&&"(ÎŠç­şÿÿÿÿ8ºùêÉÄ1
 A
 java:S1659a"Declare "y" on a separate line.(¡¶ášúÿÿÿÿ8¾ùêÉÄ1
-G	java:S106o"+Replace this use of System.out by a logger.(úŠ®8¿ùêÉÄ1
+X	java:S125o"<This block of commented-out lines of code should be removed.(ªûˆ8·¬ŒİÄ1
 p
 java:S3776’"RRefactor this method to reduce its Cognitive Complexity from 22 to the 15 allowed.(ÿÃéœ8ÄùêÉÄ1
 H	java:S106À"+Replace this use of System.out by a logger.(Éğ8ÉùêÉÄ1

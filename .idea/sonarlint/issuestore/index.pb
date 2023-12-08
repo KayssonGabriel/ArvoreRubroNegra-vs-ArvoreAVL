@@ -19,3 +19,7 @@ Z
 *src/arvoreRubroNegra/ArvoreRubroNegra.java,b\d\bd6ea357d81b40d56436b381c27e9b6357cff862
 u
 Esrc/arquivoDados/Gravados/Contador de vezes que o número aparece.txt,4\f\4f8477e27ba776d902f6e27f955fedba8c451cf3
+|
+Lsrc/arquivoDados/Gravados/Contador de vezes que o número aparece na AVL.txt,3\6\3618608b054aae305a34c27d3170956f8bd570b2
+�
+Tsrc/arquivoDados/Gravados/Contador de vezes que o número aparece na Rubro Negra.txt,f\6\f641e1b497dbe76238d6b61a75efe08de4b5e880

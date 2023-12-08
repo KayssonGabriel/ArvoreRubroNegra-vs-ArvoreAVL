@@ -108,7 +108,7 @@ public class ArvoreRubroNegra {
         }
 
         if (z == TNULL) {
-            System.out.println("Não foi possível encontrar a chave na árvore");
+            //System.out.println("Não foi possível encontrar a chave na árvore");
             return;
         }
 
